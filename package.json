@@ -17,7 +17,11 @@
   },
   "homepage": "https://github.com/gkutiel/prime#readme",
   "devDependencies": {
+    "@types/node": "^13.7.7",
     "parcel-bundler": "^1.12.4",
     "sass": "^1.26.2"
+  },
+  "dependencies": {
+    "moment": "^2.24.0"
   }
 }
