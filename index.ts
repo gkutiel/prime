@@ -8,11 +8,13 @@ import { parse } from './ts/prime'
 window.addEventListener('DOMContentLoaded', () => {
     const lable = prime.label(prime.parse('20/5/2006'))
     console.log(lable)
-    console.log(prime.extrapolate({
+    const points = prime.extrapolate({
         date: parse('5/7/1999'),
         value: 0
     }, {
         date: parse('7/7/1999'),
         value: 10
-    }))
+    })
+
+    console.log(prime.labelAll(points))
 })

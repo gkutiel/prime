@@ -2,13 +2,13 @@ import moment, { Moment } from 'moment'
 
 
 const primes = [
-    ['13/7/92', 'רבין'],
-    ['22/11/95', 'פרס'],
-    ['18/6/96', 'ביבי'],
-    ['6/7/99', 'ברק'],
-    ['7/3/01', 'שרון'],
-    ['14/4/06', 'אולמרט'],
     ['31/3/09', 'ביבי'],
+    ['14/4/06', 'אולמרט'],
+    ['7/3/01', 'שרון'],
+    ['6/7/99', 'ברק'],
+    ['18/6/96', 'ביבי'],
+    ['22/11/95', 'פרס'],
+    ['13/7/92', 'רבין'],
 ].map((tuple) => {
     return {
         name: tuple[1]
@@ -19,6 +19,7 @@ const primes = [
 type point = {
     date: Moment
     value: number
+    label?: string
 }
 
 export function parse(date: string) {
@@ -26,11 +27,18 @@ export function parse(date: string) {
 }
 
 export function label(date: Moment) {
-    for (let prime of primes.reverse()) {
-        if (date.isAfter(prime.startDate)) {
+    for (let prime of primes) {
+        if (date.isSameOrAfter(prime.startDate)) {
             return prime.name
         }
     }
+}
+
+export function labelAll(points: point[]) {
+    for (let point of points) {
+        point.label = label(point.date)
+    }
+    return points
 }
 
 function value(p1: point, p2: point, date: Moment) {
@@ -57,6 +65,6 @@ export function extrapolate(p1: point, p2: point) {
     return points
 }
 
-export function get(series: point[]) {
+export function extrapolateAll(points: point[]) {
 
 }

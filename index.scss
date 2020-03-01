@@ -8,15 +8,18 @@ html, body{
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border: 1px solid green;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
 }
 
 polyline{
-    cursor: pointer;
-    transition: all .5s;
-    stroke-width: 1;
-}
-
-polyline:hover {
-    stroke-width: 2;
+    transform: translate(0, 100%) scale(1, -1);
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    shape-rendering: geometricPrecision;
 }
