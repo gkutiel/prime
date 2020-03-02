@@ -57,15 +57,30 @@ export function chart(title: string, points: point[]) {
     chart.appendChild(svg)
 
     const rect = (x: number, width: number, label: string) => {
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "svg")
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect")
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text")
+        text.innerHTML = label
 
-        rect.setAttribute('x', `${x}`)
-        rect.setAttribute('width', `${width}`)
-        rect.setAttribute('height', `${scale_y}`)
+        g.setAttribute('x', `${x}`)
+        g.setAttribute('width', `${width}`)
+        g.setAttribute('height', `${scale_y}`)
+        // rect.setAttribute('x', `${x}`)
+        // rect.setAttribute('width', `${width}`)
+        // rect.setAttribute('height', `${scale_y}`)
         rect.setAttribute('data-label', label)
         rect.setAttribute('class', 'prime')
 
-        return rect
+        // text.setAttribute('x', `${x}`)
+        text.setAttribute('x', `50%`)
+        text.setAttribute('y', `50%`)
+        // text.setAttribute('textLength', `${width}`)
+        // text.setAttribute('transform', `rotate(90) translate(${scale_y / 2},0)`)
+        text.setAttribute('class', `prime`)
+
+        g.appendChild(rect)
+        g.appendChild(text)
+        return g
     }
 
     for (let i = 0; i < labels.length - 1; i++) {
