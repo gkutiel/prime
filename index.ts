@@ -1,20 +1,27 @@
-import Chart from 'chart.js'
-
-import { buildings } from './data/building'
-import moment from 'moment'
-import * as prime from './ts/prime'
-import { parse } from './ts/prime'
+import * as p from "./ts/prime"
 
 window.addEventListener('DOMContentLoaded', () => {
-    const lable = prime.label(prime.parse('20/5/2006'))
-    console.log(lable)
-    const points = prime.extrapolate({
-        date: parse('5/7/1999'),
-        value: 0
-    }, {
-        date: parse('7/7/1999'),
-        value: 10
-    })
-
-    console.log(prime.labelAll(points))
+    const charts = document.getElementById('charts')
+    charts?.appendChild(p.chart([
+        {
+            x: p.parse('5/6/1996').unix(),
+            y: 0
+        },
+        {
+            x: p.parse('5/6/2000').unix(),
+            y: 10
+        },
+        {
+            x: p.parse('5/6/2007').unix(),
+            y: 20
+        },
+        {
+            x: p.parse('5/6/2010').unix(),
+            y: 15
+        },
+        {
+            x: p.parse('5/6/2015').unix(),
+            y: 23
+        },
+    ]))
 })

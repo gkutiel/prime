@@ -2,69 +2,73 @@ import moment, { Moment } from 'moment'
 
 
 const primes = [
-    ['31/3/09', 'ביבי'],
-    ['14/4/06', 'אולמרט'],
-    ['7/3/01', 'שרון'],
-    ['6/7/99', 'ברק'],
-    ['18/6/96', 'ביבי'],
-    ['22/11/95', 'פרס'],
     ['13/7/92', 'רבין'],
-].map((tuple) => {
-    return {
-        name: tuple[1]
-        , startDate: parse(tuple[0])
-    }
-})
+    ['22/11/95', 'פרס'],
+    ['18/6/96', 'ביבי'],
+    ['6/7/99', 'ברק'],
+    ['7/3/01', 'שרון'],
+    ['14/4/06', 'אולמרט'],
+    ['31/3/09', 'ביבי'],
+]
+
 
 type point = {
-    date: Moment
-    value: number
-    label?: string
+    x: number,
+    y: number,
 }
 
 export function parse(date: string) {
     return moment(date, 'DD/MM/YYYY')
 }
 
-export function label(date: Moment) {
-    for (let prime of primes) {
-        if (date.isSameOrAfter(prime.startDate)) {
-            return prime.name
+export function chart(points: point[]) {
+    const scale = 500
+    const labels = primes.map(p => {
+        return {
+            unix: parse(p[0]).unix(),
+            label: p[1]
         }
+    })
+
+    labels.push({ unix: moment().unix(), label: '?' })
+
+    const minX = Math.min(...labels.map(l => l.unix))
+    const maxX = Math.max(...labels.map(l => l.unix))
+
+    const scaleX = (x: number) => (x - minX) / (maxX - minX) * scale
+
+    const ys = points.map(p => p.y)
+    const minY = Math.min(...ys)
+    const maxY = Math.max(...ys)
+
+    const scaleY = (y: number) => (y - minY) / (maxY - minY) * scale
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+    svg.setAttribute('viewBox', `0 0 ${scale} ${scale}`)
+
+    const rect = (x: number, width: number, label: string) => {
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect")
+
+        rect.setAttribute('x', `${x}`)
+        rect.setAttribute('width', `${width}`)
+        rect.setAttribute('height', `${scale}`)
+        rect.setAttribute('data-label', label)
+        rect.setAttribute('class', 'prime')
+
+        return rect
     }
-}
 
-export function labelAll(points: point[]) {
-    for (let point of points) {
-        point.label = label(point.date)
-    }
-    return points
-}
-
-function value(p1: point, p2: point, date: Moment) {
-    const r = (date.unix() - p1.date.unix()) / (p2.date.unix() - p1.date.unix())
-    const d = (p2.value - p1.value)
-    console.log(r, d)
-    return p1.value + r * d
-}
-
-export function extrapolate(p1: point, p2: point) {
-    const points: point[] = [p1]
-
-    for (let prime of primes) {
-        if (prime.startDate.isBetween(p1.date, p2.date)) {
-            points.push({
-                date: prime.startDate,
-                value: value(p1, p2, prime.startDate)
-            })
-        }
+    for (let i = 0; i < labels.length - 1; i++) {
+        const label = labels[i].label
+        const x = scaleX(labels[i].unix)
+        const width = scaleX(labels[i + 1].unix) - x
+        svg.appendChild(rect(x, width, label))
     }
 
-    points.push(p2)
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline")
+    line.setAttribute('points', points.map(p => `${scaleX(p.x)},${scaleY(p.y)}`).join(' '))
 
-    return points
+    svg.appendChild(line)
+    return svg
 }
 
-export function extrapolateAll(points: point[]) {
-
-}
