@@ -87,5 +87,4 @@ window.addEventListener('DOMContentLoaded', () => {
     charts?.appendChild(prime.chart('שריפת דלק', fuel))
     charts?.appendChild(prime.chart('מימון הוצאות החינוך ללא בלאי - סך כולל', edu))
     charts?.appendChild(prime.chart('תמותת תינוקות ל-1000 לידות', babies))
-
 })
