@@ -21,8 +21,9 @@ export function parse(date: string) {
     return moment(date, 'DD/MM/YYYY')
 }
 
-export function chart(points: point[]) {
-    const scale = 500
+export function chart(title: string, points: point[]) {
+    const scale_x = 400
+    const scale_y = 200
     const labels = primes.map(p => {
         return {
             unix: parse(p[0]).unix(),
@@ -34,24 +35,32 @@ export function chart(points: point[]) {
 
     const minX = Math.min(...labels.map(l => l.unix))
     const maxX = Math.max(...labels.map(l => l.unix))
-
-    const scaleX = (x: number) => (x - minX) / (maxX - minX) * scale
-
     const ys = points.map(p => p.y)
     const minY = Math.min(...ys)
     const maxY = Math.max(...ys)
 
-    const scaleY = (y: number) => (y - minY) / (maxY - minY) * scale
+    const m = 20
+    const scaleX = (x: number) => Math.round((x - minX) / (maxX - minX) * scale_x)
+    const scaleY = (y: number) => Math.round(
+        m + (y - minY) / (maxY - minY) * (scale_y - 2 * m)
+    )
 
+    const chart = document.createElement('div')
+    chart.setAttribute('class', 'chart')
+    const h2 = document.createElement('h2')
+    h2.innerText = title
+    chart.appendChild(h2)
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
-    svg.setAttribute('viewBox', `0 0 ${scale} ${scale}`)
+    svg.setAttribute('viewBox', `0 0 ${scale_x} ${scale_y}`)
+    svg.setAttribute('class', 'chart')
+    chart.appendChild(svg)
 
     const rect = (x: number, width: number, label: string) => {
         const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect")
 
         rect.setAttribute('x', `${x}`)
         rect.setAttribute('width', `${width}`)
-        rect.setAttribute('height', `${scale}`)
+        rect.setAttribute('height', `${scale_y}`)
         rect.setAttribute('data-label', label)
         rect.setAttribute('class', 'prime')
 
@@ -69,6 +78,6 @@ export function chart(points: point[]) {
     line.setAttribute('points', points.map(p => `${scaleX(p.x)},${scaleY(p.y)}`).join(' '))
 
     svg.appendChild(line)
-    return svg
+    return chart
 }
 
