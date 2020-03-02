@@ -1,0 +1,108 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#defs {
+  height: 0;
+  width: 0;
+}
+
+#charts {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow-y: auto;
+}
+
+div.chart {
+  width: 800px;
+  height: 400px;
+  margin: 5em auto;
+}
+
+polyline {
+  transform: translate(0, 100%) scale(1, -1);
+  fill: none;
+  stroke: #333;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+rect.prime {
+  opacity: 0.4;
+}
+
+pattern path {
+  d: path("M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2");
+}
+
+#fill-1 {
+  stroke: green;
+}
+
+#fill-2 {
+  stroke: orange;
+}
+
+#fill-3 {
+  stroke: red;
+}
+
+#fill-4 {
+  stroke: blue;
+}
+
+#fill-5 {
+  stroke: pink;
+}
+
+#fill-6 {
+  stroke: purple;
+}
+
+#fill-7 {
+  stroke: teal;
+}
+
+rect[data-label=פרס] {
+  fill: url(#fill-1);
+}
+
+rect[data-label=ביבי] {
+  fill: url(#fill-2);
+}
+
+rect[data-label=ברק] {
+  fill: url(#fill-3);
+}
+
+rect[data-label=רבין] {
+  fill: url(#fill-4);
+}
+
+rect[data-label=שרון] {
+  fill: url(#fill-5);
+}
+
+rect[data-label=אולמרט] {
+  fill: url(#fill-6);
+}
+
+rect[data-label=שמיר] {
+  fill: url(#fill-7);
+}
+
+
+
+
+/*# sourceMappingURL=/prime/prime.11787700.css.map */
