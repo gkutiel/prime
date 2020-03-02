@@ -1,0 +1,138 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#defs {
+  height: 0;
+  width: 0;
+}
+
+#charts {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow-y: auto;
+}
+
+div.chart {
+  width: 800px;
+  height: 400px;
+  margin: 5em auto;
+}
+
+polyline {
+  transform: translate(0, 100%) scale(1, -1);
+  fill: none;
+  stroke: #333;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+rect.prime {
+  transition: all 1s;
+  opacity: 0.6;
+  width: 100%;
+  height: 100%;
+}
+
+text.prime {
+  transition: all 1s;
+  font-size: 10px;
+  text-anchor: middle;
+  opacity: 0;
+}
+
+:hover > rect.prime {
+  opacity: 0.3;
+}
+
+:hover > text.prime {
+  opacity: 1;
+}
+
+pattern path {
+  d: path("M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2");
+}
+
+#blue-1 {
+  stroke: #0096fe;
+}
+
+#blue-2 {
+  stroke: #3badfc;
+}
+
+#blue-3 {
+  stroke: #59d4ff;
+}
+
+#blue-4 {
+  stroke: #9debff;
+}
+
+#blue-5 {
+  stroke: #d0f5fc;
+}
+
+#red-1 {
+  stroke: #ec1e1e;
+}
+
+#red-2 {
+  stroke: #cc1d1d;
+}
+
+#red-3 {
+  stroke: #9f2525;
+}
+
+#red-4 {
+  stroke: #781f1f;
+}
+
+#red-5 {
+  stroke: #5e1616;
+}
+
+rect[data-label=פרס] {
+  fill: url(#red-1);
+}
+
+rect[data-label=ברק] {
+  fill: url(#red-2);
+}
+
+rect[data-label=רבין] {
+  fill: url(#red-3);
+}
+
+rect[data-label=ביבי] {
+  fill: url(#blue-1);
+}
+
+rect[data-label=שרון] {
+  fill: url(#blue-2);
+}
+
+rect[data-label=אולמרט] {
+  fill: url(#blue-3);
+}
+
+rect[data-label=שמיר] {
+  fill: url(#blue-4);
+}
+
+
+
+
+/*# sourceMappingURL=/prime/prime.837eca48.css.map */
